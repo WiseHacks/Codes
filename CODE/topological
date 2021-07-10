@@ -1,0 +1,101 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+#define FOR(I,v,b) for(int I=v;I<b;I++)
+#define FORit(it,v) for(auto it=v.begin();it!=v.end();it++)
+#define ROF(I,v,b) for(int I=v;I>=b;I--)
+#define vec vector
+#define vi vec<int>
+#define pb push_back
+#define pp pop_back
+#define all(x) x.begin(),x.end()
+#define testcases int tc;cin>>tc;while(tc--)
+#define mem(v,k) memset(v,k,sizeof(v))
+#define FF first
+#define SS second
+#define rt return
+#define br break
+#define ct continue
+#define endl "\n"
+#define ii pair<int,int>
+#define vecin(v,n,index) for(int I=index;I<n;I++)cin>>v[I];
+#define vecout(v,n,index) for(int I=index;I<n;I++)cout<<v[I]<<" ";cout<<endl;
+
+vi ad[10001], inEdge(10001);
+vi res;
+// void kahn(int n) {
+// 	priority_queue < int, vector<int>, greater<int>> q;
+// 	FOR(i, 1, n + 1) {
+// 		if (inEdge[i] == 0) {
+// 			q.push(i);
+// 		}
+// 	}
+// 	while (!q.empty()) {
+// 		int cur = q.top();
+// 		res.pb(cur);
+// 		q.pop();
+// 		for (auto k : ad[cur]) {
+// 			inEdge[k]--;
+// 			if (inEdge[k] == 0)q.push(k);
+// 		}
+// 	}
+// 	if (res.size() == n) {
+// 		vecout(res, n, 0);
+// 	}
+// 	else cout << "Sandro fails\n";
+// }
+void kahn(int n) {
+	set<int> q;
+	FOR(i, 1, n + 1) {
+		if (inEdge[i] == 0)q.insert(i);
+	}
+	while (!q.empty()) {
+		int cur = *q.begin();
+		res.pb(cur);
+		q.erase(q.begin());
+		for (auto k : ad[cur]) {
+			inEdge[k]--;
+			if (inEdge[k] == 0)q.insert(k);
+		}
+	}
+	if (res.size() == n) {
+		vecout(res, n, 0);
+	}
+	else cout << "Sandro fails.\n";
+}
+void dfs(int v){
+	vs[v]=1;
+	for(auto k:ad[v]){
+		if(!vs[k]){
+			dfs(k);
+		}
+	}
+	ans.pb(v);
+	// vertices in increasing order of their out time, TOPO - vertices with dec order, simply reverse the ans
+}
+void solve() {
+	int n, m;
+	cin >> n >> m;
+	while (m--) {
+		int u, v;
+		cin >> u >> v;
+		ad[u].pb(v);
+		inEdge[v]++;
+	}
+	kahn(n);
+}
+
+signed main() {
+
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+	freopen("error.txt", "w", stderr);
+#endif
+	ios_base::sync_with_stdio(false);   cin.tie(NULL);  cout.tie(NULL);
+
+	// testcases
+	solve();
+}
+
+

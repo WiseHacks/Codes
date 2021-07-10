@@ -1,0 +1,73 @@
+#include<bits/stdc++.h>
+#include<chrono>
+using namespace std;
+using namespace std::chrono;
+#define ll long long int
+#define ull unsigned long long int
+#define FOR(I,a,b) for(int I=a;I<b;I++)
+#define FORit(it,a) for(auto it=a.begin();it!=a.end();it++)
+#define ROF(I,a,b) for(int I=a;I>=b;I--)
+#define vec vector
+#define vi vec<int>
+#define vll vec<ll>
+#define pb push_back
+#define pp pop_back
+#define all(x) x.begin(),x.end()
+#define testcases ll t;cin>>t;while(t--)
+#define mem(a,k) memset(a,k,sizeof(a))
+#define FF first
+#define SS second
+#define MP(x,y) make_pair(x,y)
+#define rt return
+#define br break
+#define ct continue
+#define elif else if
+#define ii pair<int,int>
+#define vecin(a,n,index) for(int I=index;I<n;I++)cin>>a[I]
+#define vecout(a,n,index) for(int I=index;I<n;I++)cout<<a[I]<<" ";cout<<endl;
+//ll mod = 1000000007;
+int n, k;
+vi pr(100001);
+bool is(int m, int n) {
+	// Check every subarray of length mid if  
+    // it has sum > 0 or not if sum > 0 then it 
+    // will satisfy our required condition 
+	FOR(i, m - 1, n) {
+		int x = pr[i];
+		if (i - m >= 0)x -= pr[i - m];
+		if (x > 0)rt true;
+	}
+	rt false;
+}
+int fun(vec<bool> check, vi v) {
+	int n = v.size(), l = 1, h = n, res = 0;
+	FOR(i, 0, n) {if (v[i] > k)pr[i] = 1; else pr[i] = -1;}
+	FOR(i, 1, n)pr[i] += pr[i - 1];
+	while (l <= h) {
+		int m = (l + h) / 2;
+		if (is(m, n)) {
+			res = m;
+			l = m + 1;
+		}
+		else h = m - 1;
+	}
+	rt res;
+}
+void solve() {
+	cin >> n >> k;
+	vi v(n);
+	vecin(v, n, 0);
+	vec<bool> check(n);
+	FOR(i, 0, n)if (v[i] > k)check[i] = 1;
+	cout << fun(check, v) << endl;
+}
+int main()
+{
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+	ios_base::sync_with_stdio(false);	cin.tie(NULL);	cout.tie(NULL);
+	// START FROM HERE :)
+	solve();
+}

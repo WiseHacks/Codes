@@ -1,0 +1,80 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ull unsigned long long int
+#define FOR(I,a,b) for(int I=a;I<b;I++)
+#define FORit(it,a) for(auto it=a.begin();it!=a.end();it++)
+#define ROF(I,a,b) for(int I=a;I>=b;I--)
+#define vec vector
+#define vi vec<int>
+#define vll vec<ll>
+#define pb push_back
+#define pp pop_back
+#define all(x) x.begin(),x.end()
+#define testcases ll t;cin>>t;while(t--)
+#define mem(a,k) memset(a,k,sizeof(a))
+#define FF first
+#define SS second
+#define MP(x,y) make_pair(x,y)
+#define rt return
+#define br break
+#define ct continue
+#define elif else if
+#define ii pair<int,int>
+#define vecin(a,n,index) for(int I=index;I<n;I++)cin>>a[I]
+#define vecout(a,n,index) for(int I=index;I<n;I++)cout<<a[I]<<" ";cout<<endl;
+//ll mod = 1000000007;
+vi ad[1001];
+vi vs(1001);
+vi pr(1001);
+bool is = false;
+/*
+bool dfs(int node,int par){
+	vs[node]=1;
+	for(auto child : ad[node]){
+		if(vs[child]==0){
+			if(dfs(child,node)==true)rt true;
+		}
+		else {
+			if(child!=par)rt true;
+		}
+	}
+	rt false;
+}
+*/
+void dfs(int v) {
+	vs[v] = 1;
+	for (auto k : ad[v]) {
+		if (vs[k] == 1) {
+			if (k != pr[v])is = true;//if visited node is parent or ancestor
+		}
+		else {
+			pr[k] = v;
+			dfs(k);
+		}
+	}
+}
+void solve() {
+	int n, m;
+	cin >> n >> m;
+	while (m--) {
+		int u, v;
+		cin >> u >> v;
+		ad[u].pb(v);
+		ad[v].pb(u);
+	}
+	dfs(1);
+	cout << is << endl;
+
+}
+int main()
+{
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+	ios_base::sync_with_stdio(false);	cin.tie(NULL);	cout.tie(NULL);
+	// START FROM HERE :)
+	solve();
+}
+

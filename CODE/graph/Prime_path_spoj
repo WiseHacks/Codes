@@ -1,0 +1,113 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ull unsigned long long int
+#define FOR(I,a,b) for(int I=a;I<b;I++)
+#define FORit(it,a) for(auto it=a.begin();it!=a.end();it++)
+#define ROF(I,a,b) for(int I=a;I>=b;I--)
+#define vec vector
+#define vi vec<int>
+#define vll vec<ll>
+#define pb push_back
+#define pp pop_back
+#define all(x) x.begin(),x.end()
+#define testcases ll t;cin>>t;while(t--)
+#define mem(a,k) memset(a,k,sizeof(a))
+#define FF first
+#define SS second
+#define MP(x,y) make_pair(x,y)
+#define rt return
+#define br break
+#define ct continue
+#define elif else if
+#define ii pair<int,int>
+#define vecin(a,n,index) for(int I=index;I<n;I++)cin>>a[I]
+#define vecout(a,n,index) for(int I=index;I<n;I++)cout<<a[I]<<" ";cout<<endl;
+//ll mod = 1000000007;
+vi ad[10000];
+vi vs(10000);
+vi P(10000, 1);
+vi d(10000);
+queue<int> q;
+void sieve() {
+	P[0] = 0, P[1] = 0;
+	for (int i = 2; i * i < 10000; i++) {
+		if (P[i]) {
+			for (int j = i * i; j < 10000; j += i) {
+				P[j] = 0;
+			}
+		}
+	}
+}
+void bfs(int v) {
+	q.push(v);
+	while (q.size() != 0) {
+		int cur = q.front();
+		vs[cur] = 1;
+		q.pop();
+		for (auto k : ad[cur]) {
+			if (!vs[k]) {
+				vs[k] = 1;
+				d[k] = d[cur] + 1;
+				q.push(k);
+			}
+		}
+	}
+}
+bool is(int a, int b) {
+	int cnt = 0;
+	while (a > 0) {
+		if (a % 10 != b % 10)cnt++;
+		a /= 10, b /= 10;
+	}
+	if (cnt == 1)rt true;
+	rt false;
+}
+void solve() {
+	sieve();
+	FOR(i, 1000, 10000) {
+		if (P[i])/*or pb all primes in prime vector and then check in prime vector*/
+		{
+			FOR(j, i + 1, 10000) {
+				if (is(i, j) && P[j]) {
+					ad[i].pb(j);
+					ad[j].pb(i);
+				}
+			}
+		}
+	}
+	/*
+	vi prime;
+	FOR(i,1000,10000)if(P[i])prime.pb(i);
+
+	FOR(i,0,prime.size()){
+		FOR(j,i+1,prime.size()){
+			int x=prime[i];
+			int y=prime[j];
+			if(is(x,y)){
+				ad[x].pb(y);
+				ad[y].pb(x);
+			}
+		}
+	}
+	*/
+	testcases{
+		int a, b;
+		cin >> a >> b;
+		bfs(a);
+		if (a != b  && d[b] == 0)cout << "Impossible\n";
+		else cout << d[b] << endl;
+		FOR(i, 0, 10000) {d[i] = 0; vs[i] = 0;}
+	}
+}
+int main()
+{
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+	ios_base::sync_with_stdio(false);	cin.tie(NULL);	cout.tie(NULL);
+	// START FROM HERE :)
+	solve();
+}
+

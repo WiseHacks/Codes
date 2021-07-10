@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+#include<chrono>
+using namespace std;
+using namespace std::chrono;
+#define ll long long int
+#define ull unsigned long long int
+#define FOR(I,a,b) for(int I=a;I<b;I++)
+#define FORit(it,a) for(auto it=a.begin();it!=a.end();it++)
+#define ROF(I,a,b) for(int I=a;I>=b;I--)
+#define vec vector
+#define vi vec<int>
+#define vll vec<ll>
+#define pb push_back
+#define pp pop_back
+#define all(x) x.begin(),x.end()
+#define testcases ll t;cin>>t;while(t--)
+#define mem(a,k) memset(a,k,sizeof(a))
+#define FF first
+#define SS second
+#define MP(x,y) make_pair(x,y)
+#define rt return
+#define br break
+#define ct continue
+#define elif else if
+#define ii pair<int,int>
+#define vecin(a,n,index) for(int I=index;I<n;I++)cin>>a[I]
+#define vecout(a,n,index) for(int I=index;I<n;I++)cout<<a[I]<<" ";cout<<endl;
+//ll mod = 1000000007;
+void solve() {
+	int n, k;
+	cin >> n >> k;
+	vi a(n);
+	vecin(a, n, 0);
+	vi v(100001);
+	int odd = 0;
+	int ans = 0;
+	FOR(i, 0, n) {
+		v[odd]++;
+		if (a[i] % 2)odd++;
+		if (odd >= k)ans += v[odd - k];
+	}
+	vecout(v, n, 0);
+	cout << ans << endl;
+}
+int main()
+{
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+	ios_base::sync_with_stdio(false);	cin.tie(NULL);	cout.tie(NULL);
+	// START FROM HERE :)
+	solve();
+}
